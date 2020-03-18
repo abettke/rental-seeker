@@ -5,7 +5,7 @@ Technical assessment project for toptal.
 ## Installation
 
 ```bash
-$ npm install
+$ npm install --silent
 ```
 
 ## Running the app
