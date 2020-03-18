@@ -1,8 +1,8 @@
 {
   "name": "andrew-bettke",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "Technical assessment project for toptal.",
+  "author": "abettke@gmail.com",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
