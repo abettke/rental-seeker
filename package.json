@@ -1,6 +1,11 @@
 {
   "name": "andrew-bettke",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "engineStrict": true,
   "description": "Technical assessment project for toptal.",
   "author": "abettke@gmail.com",
   "private": true,

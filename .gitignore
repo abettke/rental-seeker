@@ -38,3 +38,6 @@ database.sqlite3
 
 # Webstorm
 *.http
+
+# NPM
+/package-lock.json
