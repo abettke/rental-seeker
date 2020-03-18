@@ -27,7 +27,7 @@ Write an application that manages apartment rentals
 ## Installation
 
 ```bash
-$ yarn install
+$ yarn install --frozen-lockfile
 ```
 
 ## Running the app

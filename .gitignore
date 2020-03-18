@@ -35,3 +35,6 @@ lerna-debug.log*
 
 # sqlite3
 database.sqlite3
+
+# Webstorm
+*.http
