@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
-import { Validate } from 'class-validator';
-import { IsPasswordStrong } from './password-strength.constraint';
+import { IsString } from 'class-validator';
+import { IsPasswordStrong } from './password-strength.validator';
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
 
 @Entity()
@@ -9,10 +9,11 @@ export class User {
   id: number;
 
   @Column()
+  @IsString()
   username: string;
 
   @Column()
-  @Validate(IsPasswordStrong, { always: true })
+  @IsPasswordStrong({ always: true })
   password: string;
 
   @BeforeInsert()
