@@ -3,7 +3,7 @@ import {
   registerDecorator,
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationOptions
+  ValidationOptions,
 } from 'class-validator';
 
 @ValidatorConstraint({ name: 'isPasswordStrong' })
@@ -26,7 +26,7 @@ export function IsPasswordStrong(validationOptions?: ValidationOptions) {
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: IsPasswordStrongConstraint
+      validator: IsPasswordStrongConstraint,
     });
   };
 }

@@ -8,7 +8,7 @@ import { UserModule } from './user';
   imports: [
     DatabaseModule,
     AuthenticationModule,
-    UserModule
+    UserModule,
   ],
 })
 export class AppModule {}
