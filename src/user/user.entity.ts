@@ -5,6 +5,11 @@ import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } fr
 
 @Entity()
 export class User {
+
+  constructor(initial?: Partial<User>) {
+    Object.assign(this, initial);
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 
