@@ -3,7 +3,7 @@ import { Crud, CrudController } from '@nestjsx/crud';
 import { JwtAuthGuard } from '../auth/auth.guard.jwt';
 import { RoleGuard } from '../auth/auth.guard.role';
 import { RequiredRoles } from '../auth/auth.decorator.roles';
-import { ROLES } from '../auth/auth.constants.roles';
+import { Roles } from '../auth/auth.roles';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { UserRoutes } from './user.routes';
@@ -15,7 +15,7 @@ import { UserRoutes } from './user.routes';
 })
 @Controller(UserRoutes.ROOT)
 @UseGuards(JwtAuthGuard, RoleGuard)
-@RequiredRoles(ROLES.ADMIN)
+@RequiredRoles(Roles.ADMIN)
 export class UserController implements CrudController<User> {
   constructor(public service: UserService) {}
 }

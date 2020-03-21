@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { IsEnum, IsString } from 'class-validator';
 import { IsPasswordStrong } from './password-strength.validator';
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { ROLES } from '../auth/auth.constants.roles';
+import { Roles } from '../auth/auth.roles';
 
 @Entity()
 export class User {
@@ -22,9 +22,9 @@ export class User {
   @IsPasswordStrong({ always: true })
   password: string;
 
-  @Column({ default: ROLES.CLIENT })
-  @IsEnum(ROLES)
-  role: ROLES;
+  @Column({ default: Roles.CLIENT })
+  @IsEnum(Roles)
+  role: Roles;
 
   @BeforeInsert()
   @BeforeUpdate()
