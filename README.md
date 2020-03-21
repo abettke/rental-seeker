@@ -69,3 +69,4 @@ Write an application that manages apartment rentals
 |   ---    | ---   |
 |2020-03-18|   2   |
 |2020-03-19|   2   |
+|2020-03-19|   4   |
