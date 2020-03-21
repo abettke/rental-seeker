@@ -12,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       logging: false,
       migrations: [__dirname + '/migrations/*.{ts,js}'],
       migrationsRun: true,
+      migrationsTransactionMode: 'each',
     }),
   ],
 })

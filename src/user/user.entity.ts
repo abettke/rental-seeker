@@ -1,8 +1,9 @@
 import * as bcrypt from 'bcrypt';
 import { IsEnum, IsString } from 'class-validator';
 import { IsPasswordStrong } from './password-strength.validator';
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Roles } from '../auth/auth.roles';
+import { Rental } from '../rental/rental.entity';
 
 @Entity()
 export class User {
@@ -25,6 +26,9 @@ export class User {
   @Column({ default: Roles.CLIENT })
   @IsEnum(Roles)
   role: Roles;
+
+  @OneToMany(() => Rental, rental => rental.realtor)
+  rentals: Rental[];
 
   @BeforeInsert()
   @BeforeUpdate()
