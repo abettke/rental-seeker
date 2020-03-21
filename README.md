@@ -59,4 +59,4 @@ Write an application that manages apartment rentals
 |   Date   | Hours |
 |   ---    | ---   |
 |2020-03-18|   2   |
-|2020-03-19|   -   |
+|2020-03-19|   2   |
