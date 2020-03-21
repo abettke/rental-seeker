@@ -1,7 +1,8 @@
 import * as bcrypt from 'bcrypt';
-import { IsString } from 'class-validator';
+import { IsEnum, IsString } from 'class-validator';
 import { IsPasswordStrong } from './password-strength.validator';
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { ROLES } from '../auth/auth.constants.roles';
 
 @Entity()
 export class User {
@@ -20,6 +21,10 @@ export class User {
   @Column()
   @IsPasswordStrong({ always: true })
   password: string;
+
+  @Column({ default: ROLES.CLIENT })
+  @IsEnum(ROLES)
+  role: ROLES;
 
   @BeforeInsert()
   @BeforeUpdate()
