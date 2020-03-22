@@ -17,6 +17,7 @@ import { RentalRoutes } from './rental.routes';
     join: {
       realtor: {
         eager: true,
+        exclude: ['password'],
       },
     },
   },

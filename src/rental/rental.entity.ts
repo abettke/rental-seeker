@@ -45,7 +45,11 @@ export class Rental {
   @IsDate()
   createdAt: Date;
 
-  @ManyToOne(() => User, user => user.rentals, { eager: true, cascade: true })
+  @ManyToOne(() => User, user => user.rentals, {
+    eager: true,
+    cascade: true,
+    onDelete: 'SET NULL',
+  })
   @ValidateNested()
   @Type(() => User)
   realtor: User;

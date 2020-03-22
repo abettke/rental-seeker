@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthRoutes } from './auth.routes';
 import { LocalAuthGuard } from './auth.guard.local';
 import { JwtAuthGuard } from './auth.guard.jwt';
+import { UserResponse } from '../user/user.response';
 
 @Controller(AuthRoutes.ROOT)
 export class AuthController {
@@ -18,7 +19,7 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get(AuthRoutes.USER)
-  getAuthenticatedUser(@Request() req) {
+  getAuthenticatedUser(@Request() req): UserResponse {
     return req.user;
   }
 

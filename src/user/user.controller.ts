@@ -7,10 +7,19 @@ import { Roles } from '../auth/auth.roles';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { UserRoutes } from './user.routes';
+import { UserResponse } from './user.response';
 
 @Crud({
   model: {
     type: User,
+  },
+  serialize: {
+    get: UserResponse,
+    create: UserResponse,
+    createMany: UserResponse,
+    update: UserResponse,
+    replace: UserResponse,
+    delete: UserResponse,
   },
 })
 @Controller(UserRoutes.ROOT)

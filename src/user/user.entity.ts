@@ -19,7 +19,7 @@ export class User {
   @IsString()
   username: string;
 
-  @Column()
+  @Column({ select: false })
   @IsPasswordStrong({ always: true })
   password: string;
 
