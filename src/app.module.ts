@@ -4,7 +4,6 @@ import { AuthenticationModule } from './auth';
 import { UserModule } from './user';
 import { RentalModule } from './rental';
 
-
 @Module({
   imports: [
     DatabaseModule,
