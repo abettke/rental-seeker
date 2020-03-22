@@ -12,6 +12,14 @@ import { RentalRoutes } from './rental.routes';
   model: {
     type: Rental,
   },
+  query: {
+    sort: [{ field: 'id', order: 'DESC'}],
+    join: {
+      realtor: {
+        eager: true,
+      },
+    },
+  },
 })
 @CrudAuth({
   property: 'user',
