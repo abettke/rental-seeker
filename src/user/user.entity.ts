@@ -18,7 +18,7 @@ export class User {
 
   @Column({ unique: true })
   @IsString()
-  @IsUnique()
+  @IsUnique({ always: true })
   username: string;
 
   @Column({ select: false })
