@@ -1,5 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { IsEnum, IsString } from 'class-validator';
+import { IsUnique } from '../database/is-unique.validator';
 import { IsPasswordStrong } from './password-strength.validator';
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Roles } from '../auth/auth.roles';
@@ -17,6 +18,7 @@ export class User {
 
   @Column({ unique: true })
   @IsString()
+  @IsUnique()
   username: string;
 
   @Column({ select: false })

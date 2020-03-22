@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { IsUniqueConstraint } from './is-unique.validator';
 
 @Module({
   imports: [
@@ -14,6 +15,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       migrationsRun: true,
       migrationsTransactionMode: 'each',
     }),
+  ],
+  providers: [
+    IsUniqueConstraint,
   ],
 })
 export class DatabaseModule {}
