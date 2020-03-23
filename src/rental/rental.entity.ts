@@ -1,11 +1,23 @@
-import { IsBoolean, IsDate, IsLatLong, IsNumber, IsString, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer'
-import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../user/user.entity'
+import {
+  IsBoolean,
+  IsDate,
+  IsLatLong,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Rental {
-
   constructor(initial?: Partial<Rental>) {
     Object.assign(this, initial);
   }
@@ -45,11 +57,15 @@ export class Rental {
   @IsDate()
   createdAt: Date;
 
-  @ManyToOne(() => User, user => user.rentals, {
-    eager: true,
-    cascade: true,
-    onDelete: 'SET NULL',
-  })
+  @ManyToOne(
+    () => User,
+    user => user.rentals,
+    {
+      eager: true,
+      cascade: true,
+      onDelete: 'SET NULL',
+    },
+  )
   @ValidateNested()
   @Type(() => User)
   realtor: User;

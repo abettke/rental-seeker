@@ -7,8 +7,8 @@ import {
 } from 'class-validator';
 
 @ValidatorConstraint({ name: 'isPasswordStrong' })
-export class IsPasswordStrongConstraint implements ValidatorConstraintInterface {
-
+export class IsPasswordStrongConstraint
+  implements ValidatorConstraintInterface {
   validate(password: string) {
     return zxcvbn(password).score >= 3;
   }
@@ -16,11 +16,10 @@ export class IsPasswordStrongConstraint implements ValidatorConstraintInterface 
   defaultMessage() {
     return '$property strength is too weak.';
   }
-
 }
 
 export function IsPasswordStrong(validationOptions?: ValidationOptions) {
-  return function (object: Record<string, any>, propertyName: string) {
+  return function(object: Record<string, any>, propertyName: string) {
     registerDecorator({
       target: object.constructor,
       propertyName: propertyName,

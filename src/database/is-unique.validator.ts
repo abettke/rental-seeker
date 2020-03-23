@@ -13,21 +13,21 @@ export interface UniqueConstraintOptions extends ValidationOptions {
 
 @ValidatorConstraint({ name: 'isUnique', async: true })
 export class IsUniqueConstraint implements ValidatorConstraintInterface {
-
   async validate(value: unknown, args: ValidationArguments): Promise<boolean> {
     const [entityClass = args.object.constructor]: any = args.constraints;
     const repo: Repository<any> = getRepository(entityClass);
-    return await repo.count({ where: { [args.property]: value } }) <= 0;
+    return (await repo.count({ where: { [args.property]: value } })) <= 0;
   }
 
   defaultMessage?(): string {
     return '$property must be a unique value';
   }
-
 }
 
-export function IsUnique(validationOptions?: UniqueConstraintOptions): Function {
-  return (object: Record<string, any>, propertyName: string): void =>  {
+export function IsUnique(
+  validationOptions?: UniqueConstraintOptions,
+): Function {
+  return (object: Record<string, any>, propertyName: string): void => {
     registerDecorator({
       propertyName,
       target: object.constructor,

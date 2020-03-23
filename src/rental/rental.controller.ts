@@ -13,7 +13,7 @@ import { RentalRoutes } from './rental.routes';
     type: Rental,
   },
   query: {
-    sort: [{ field: 'id', order: 'DESC'}],
+    sort: [{ field: 'id', order: 'DESC' }],
     join: {
       realtor: {
         eager: true,
@@ -25,7 +25,7 @@ import { RentalRoutes } from './rental.routes';
 @CrudAuth({
   property: 'user',
   filter: (user: User) => {
-    if(user.role > Roles.REALTOR) {
+    if (user.role > Roles.REALTOR) {
       return { available: true };
     }
   },

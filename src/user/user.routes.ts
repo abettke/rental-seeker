@@ -1,3 +1,3 @@
 export enum UserRoutes {
-  ROOT = 'users'
+  ROOT = 'users',
 }

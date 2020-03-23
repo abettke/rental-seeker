@@ -13,9 +13,7 @@ export const JWT_SECRET = 'e1b93c6e-3514-4061-b68d-6874d1fea13f';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    private readonly userService: UserService,
-  ) {
+  constructor(private readonly userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -25,9 +23,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: Record<string, any>) {
     const { sub: id } = payload;
-    const user: User = await this.userService.findOne({ where: { id }});
-    if(!user) {
-      throw new UnauthorizedException()
+    const user: User = await this.userService.findOne({ where: { id } });
+    if (!user) {
+      throw new UnauthorizedException();
     }
     return user;
   }

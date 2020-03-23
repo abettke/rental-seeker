@@ -12,13 +12,15 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
-    "build:client": "copyfiles client/**/*.html client/**/*.css dist && webpack --config webpack.config.js --watch",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "build": "npm run build:api && npm run build:client",
+    "build:api": "nest build",
+    "build:client": "copyfiles client/**/*.html client/**/*.css dist && webpack --config webpack.config.js",
+    "build:client:dev": "copyfiles client/**/*.html client/**/*.css dist && webpack-dev-server --config webpack.config.js",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"client/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:api:dev": "nest start --watch",
+    "start:api:debug": "nest start --debug --watch",
+    "start:api:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -81,7 +83,8 @@
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.4",
     "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "jest": {
     "moduleFileExtensions": [

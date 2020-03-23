@@ -1,5 +1,5 @@
 module.exports = {
-  mode: process.env.NODE_ENV || 'production',
+  mode: process.env.NODE_ENV || 'development',
   entry: './client/index.tsx',
   devtool: 'source-map',
   output: {
@@ -28,5 +28,10 @@ module.exports = {
         loader: 'source-map-loader',
       },
     ],
+  },
+  devServer: {
+    contentBase: __dirname + '/dist/client',
+    compress: true,
+    port: 9000,
   },
 };
