@@ -23,6 +23,17 @@ module.exports = {
         ],
       },
       {
+        test: /\.css$/i,
+        loader: 'css-loader',
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 100000,
+        },
+      },
+      {
         enforce: 'pre',
         test: /\.js$/,
         loader: 'source-map-loader',
