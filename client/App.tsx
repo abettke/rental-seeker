@@ -1,8 +1,17 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
 
 export const App: React.FC = () => {
-  console.log('hello world');
   return (
-    <h1>Hello World!!!</h1>
+    <Router>
+      <Switch>
+        <Route path={'/login'} render={() => <h1>Login Page</h1>} />
+        <Route path={'/'} render={() => <h1>Index Route</h1>} />
+      </Switch>
+    </Router>
   );
 };

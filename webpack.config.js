@@ -33,5 +33,6 @@ module.exports = {
     contentBase: __dirname + '/dist/client',
     compress: true,
     port: 9000,
+    historyApiFallback: true,
   },
 };
