@@ -3,9 +3,13 @@ module.exports = {
   parserOptions: {
     project: 'tsconfig.json',
     sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
+    "plugin:react/recommended",
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
@@ -23,4 +27,9 @@ module.exports = {
     'quotes': ['error', 'single'],
     'comma-dangle': ["error", "always-multiline"],
   },
+  settings: {
+    react: {
+      version: "detect"
+    }
+  }
 };
