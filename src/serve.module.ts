@@ -5,7 +5,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: resolve(__dirname, '..', 'client/build'),
+      rootPath: resolve(__dirname, 'client'),
       exclude: ['/api*'],
     }),
   ],
