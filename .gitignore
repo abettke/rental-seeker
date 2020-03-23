@@ -1,6 +1,8 @@
 # compiled output
 /dist
-/node_modules
+/node_modules/
+/client/node_modules
+/client/build
 
 # Logs
 logs
@@ -41,3 +43,4 @@ database.sqlite3
 
 # NPM
 /package-lock.json
+/client/package-lock.json
