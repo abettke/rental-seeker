@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { RestfulProvider } from 'restful-react';
 import { AuthProvider } from './context/AuthContext';
 import { AuthRoute, Routes } from './routes';
 import { Login, Register, Rentals } from './pages';
@@ -11,6 +12,9 @@ import { Login, Register, Rentals } from './pages';
 export const App: React.FC = () => {
   return (
     <AuthProvider>
+      <RestfulProvider
+        base={'/api'}
+      >
       <Router>
         <Switch>
           <Route path={Routes.LOGIN} render={() => <Login />} exact />
@@ -18,6 +22,7 @@ export const App: React.FC = () => {
           <AuthRoute path={Routes.ROOT} render={() => <Rentals />} />
         </Switch>
       </Router>
+      </RestfulProvider>
     </AuthProvider>
   );
 };

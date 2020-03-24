@@ -1,6 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutate } from 'restful-react';
 import { AuthFormRegistration as AuthFormLogin } from '../../src/auth/auth.form.registration';
+import { Auth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
+import { api } from '../api';
 import { Form, FormSubmit } from './Form';
 
 import Grid from '@material-ui/core/Grid';
@@ -8,8 +12,16 @@ import TextField from '@material-ui/core/TextField';
 
 export const LoginForm: React.FC = () => {
   const loginForm = useForm<AuthFormLogin>();
+  const { setAuth } = useAuth();
+  const {
+    mutate: authenticate,
+    loading: authenticating,
+  } = useMutate(api.auth.login);
+
   const login = (data: AuthFormLogin) => {
-    console.log(data);
+    authenticate(data).then((auth: Auth) => {
+      setAuth(auth);
+    });
   };
 
   return(
@@ -30,7 +42,7 @@ export const LoginForm: React.FC = () => {
             type={'password'}
           />
         </Grid>
-        <FormSubmit variant={'contained'}>
+        <FormSubmit variant={'contained'} disabled={authenticating}>
           Login
         </FormSubmit>
       </Form>
