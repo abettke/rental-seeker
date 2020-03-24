@@ -4,15 +4,19 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { AuthRoute, Routes } from './routes';
 import Typography from '@material-ui/core/Typography';
 
 export const App: React.FC = () => {
   return (
-    <Router>
-      <Switch>
-        <Route path={'/login'} render={() => <h1>Login Page</h1>} />
-        <Route path={'/'} render={() => <Typography variant={'h1'}>Hello World</Typography>} />
-      </Switch>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Switch>
+          <Route path={Routes.LOGIN} render={() => <h1>Login Page</h1>} />
+          <AuthRoute path={Routes.ROOT} render={() => <Typography variant={'h1'}>Hello World</Typography>} />
+        </Switch>
+      </Router>
+    </AuthProvider>
   );
 };
