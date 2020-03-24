@@ -6,8 +6,7 @@ import {
 } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { AuthRoute, Routes } from './routes';
-import { Login, Register } from './pages';
-import Typography from '@material-ui/core/Typography';
+import { Login, Register, Rentals } from './pages';
 
 export const App: React.FC = () => {
   return (
@@ -16,7 +15,7 @@ export const App: React.FC = () => {
         <Switch>
           <Route path={Routes.LOGIN} render={() => <Login />} exact />
           <Route path={Routes.REGISTER} render={() => <Register />} exact />
-          <AuthRoute path={Routes.ROOT} render={() => <Typography variant={'h1'}>Hello World</Typography>} />
+          <AuthRoute path={Routes.ROOT} render={() => <Rentals />} />
         </Switch>
       </Router>
     </AuthProvider>

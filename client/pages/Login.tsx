@@ -1,7 +1,11 @@
 import React from 'react';
+import { LoginForm } from '../components/LoginForm';
+import Container from '@material-ui/core/Container';
 
 export const Login: React.FC = () => {
   return (
-    <h2>Login Page</h2>
+    <Container>
+      <LoginForm />
+    </Container>
   );
 };
