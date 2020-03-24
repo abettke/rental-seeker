@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory, useLocation } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useMutate } from 'restful-react';
 import { AuthFormRegistration as AuthFormLogin } from '../../src/auth/auth.form.registration';
@@ -11,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 export const LoginForm: React.FC = () => {
+  const history = useHistory();
+  const location = useLocation();
   const loginForm = useForm<AuthFormLogin>();
   const { setAuth } = useAuth();
   const {
@@ -19,8 +22,10 @@ export const LoginForm: React.FC = () => {
   } = useMutate(api.auth.login);
 
   const login = (data: AuthFormLogin) => {
+    const { from } = (location.state as any) || { from: { pathname: '/' }};
     authenticate(data).then((auth: Auth) => {
       setAuth(auth);
+      history.replace(from);
     });
   };
 
