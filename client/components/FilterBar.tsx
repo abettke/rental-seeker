@@ -1,15 +1,22 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 
-const useStyles = makeStyles(() =>
+import { RangeFilterButton } from './FilterBarButton';
+
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    filters: {
+      '& .MuiButton-root': {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+      },
+    },
     switch: {
       display: 'flex',
       alignItems: 'center',
@@ -26,10 +33,10 @@ export const FilterBar: React.FC = () => {
   return (
     <AppBar position={'static'} color={'default'} elevation={0}>
       <Toolbar>
-        <Grid container>
-          <Button>Filter 1</Button>
-          <Button>Filter 2</Button>
-          <Button>Filter 3</Button>
+        <Grid container spacing={4} className={classes.filters}>
+          <RangeFilterButton>{'Rooms'}</RangeFilterButton>
+          <RangeFilterButton>{'Size'}</RangeFilterButton>
+          <RangeFilterButton>{'Price'}</RangeFilterButton>
         </Grid>
         <div className={classes.switch}>
           <Typography variant={'caption'}>Show Map</Typography>
