@@ -6,12 +6,14 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { AuthFormRegistration as AuthFormLogin } from '../../src/auth/auth.form.registration';
 import { Auth } from '../context/AuthContext';
 import { useAuth } from '../hooks/useAuth';
+import { Routes } from '../routes';
 import { api } from '../api';
 import { Form, FormSubmit } from './Form';
 
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
 import Snackbar from '@material-ui/core/Snackbar';
 import Icon from '@material-ui/core/Icon';
 import HomeWorkIcon from '@material-ui/icons/HomeWork';
@@ -32,10 +34,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   form: {
     '& .MuiTextField-root': {
       marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
     },
     '& button': {
       marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2),
+    },
+    '& .MuiTypography-body2': {
+      textAlign: 'center',
     },
   },
   snackbar: {
@@ -66,7 +71,6 @@ export const LoginForm: React.FC = () => {
       setAuth(auth);
       history.replace(from);
     }).catch(err => {
-      console.log(err);
       if(err.status === 401) {
         setAuthErrorFeedback('Invalid username / password');
       } else {
@@ -102,6 +106,12 @@ export const LoginForm: React.FC = () => {
         <FormSubmit variant={'contained'} disabled={authenticating} fullWidth>
           Login
         </FormSubmit>
+        <Typography variant={'body2'}>
+          {'Don\'t have an account? '}
+          <Link href={Routes.REGISTER}>
+            {'Sign up here.'}
+          </Link>
+        </Typography>
       </Form>
       <Snackbar
         open={!!authErrorFeedback}
