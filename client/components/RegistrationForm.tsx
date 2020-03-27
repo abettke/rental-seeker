@@ -15,6 +15,7 @@ import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Icon from '@material-ui/core/Icon';
 import AccountBoxSharpIcon from '@material-ui/icons/AccountBoxSharp';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   title: {
@@ -108,6 +109,12 @@ export const RegistrationForm: React.FC = () => {
         <FormSubmit variant={'contained'} disabled={loading} fullWidth>
           Sign Up
         </FormSubmit>
+        <Typography variant={'body2'}>
+          {'Already have an account? '}
+          <Link href={Routes.LOGIN}>
+            {'Login here.'}
+          </Link>
+        </Typography>
       </Form>
     </>
   );
