@@ -6,12 +6,13 @@ export interface FormProps {
   ctx: FormContextValues<any>;
   onSubmit?: (data: any) => any | Promise<any>;
   children: React.ReactNode;
+  className: string;
 }
 
-export const Form: React.FC<FormProps> = ({ ctx, onSubmit, children }: FormProps) => {
+export const Form: React.FC<FormProps> = ({ ctx, onSubmit, children , ...formProps}: FormProps) => {
   const { handleSubmit } = ctx;
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete={'off'}>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete={'off'} {...formProps}>
       {children}
     </form>
   );
