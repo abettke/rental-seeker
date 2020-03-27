@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { IsUnique } from '../database/is-unique.validator';
 import { IsPasswordStrong } from './password-strength.validator';
 import {
@@ -10,8 +10,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { CrudValidationGroups } from '@nestjsx/crud';
 import { Roles } from '../auth/auth.roles';
 import { Rental } from '../rental/rental.entity';
+
+const { CREATE } = CrudValidationGroups;
 
 @Entity()
 export class User {
@@ -24,6 +27,7 @@ export class User {
 
   @Column({ unique: true })
   @IsString()
+  @IsNotEmpty({ groups: [CREATE] })
   @IsUnique({ always: true })
   username: string;
 
