@@ -12,6 +12,11 @@ import { NumberField, getNumberValues } from './NumberField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    popover: {
+      '& .MuiPopover-paper': {
+        marginTop: theme.spacing(1),
+      },
+    },
     rangeInputs: {
       '& .MuiTextField-root': {
         marginLeft: theme.spacing(1),
@@ -83,7 +88,7 @@ export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props:
                 validate: () => rangeConstraint('Min should be less than or equal to Max'),
               })}
               error={!!errors.min}
-              helperText={errors.min?.message}
+              helperText={errors.min?.message || ' '}
             />
             <NumberField
               label={'Max'}
@@ -92,7 +97,7 @@ export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props:
                 validate: () => rangeConstraint('Max should be greater than or equal to Min'),
               })}
               error={!!errors.max}
-              helperText={errors.max?.message}
+              helperText={errors.max?.message || ' '}
             />
           </CardContent>
           <CardActions className={classes.actions}>
