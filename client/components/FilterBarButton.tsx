@@ -8,7 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 
-import { NumberField } from './NumberField';
+import { NumberField, getNumberValues } from './NumberField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,17 +32,28 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export interface RangeFilter {
-  min: number,
-  max: number,
+  min: number | undefined,
+  max: number | undefined,
 }
 
 export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props: React.PropsWithChildren<any>) => {
   const { children, ...buttonProps } = props;
-  const rangeFilterForm = useForm<RangeFilter>();
+  const { register, getValues, errors, clearError } = useForm<RangeFilter>({
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
+  });
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
+  const rangeConstraint = (message: string) => {
+    clearError();
+    const { min, max }: RangeFilter = getNumberValues<RangeFilter>(getValues());
+    if(min !== undefined && max !== undefined && min > max) {
+      return message;
+    }
+  };
+
   const applyFilter = () => {
-    console.log(rangeFilterForm.getValues());
+    console.log(getValues());
     // TODO: setRentals(filters)
   };
 
@@ -68,12 +79,20 @@ export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props:
             <NumberField
               label={'Min'}
               name={'min'}
-              inputRef={rangeFilterForm.register}
+              inputRef={register({
+                validate: () => rangeConstraint('Min should be less than or equal to Max'),
+              })}
+              error={!!errors.min}
+              helperText={errors.min?.message}
             />
             <NumberField
               label={'Max'}
               name={'max'}
-              inputRef={rangeFilterForm.register}
+              inputRef={register({
+                validate: () => rangeConstraint('Max should be greater than or equal to Min'),
+              })}
+              error={!!errors.max}
+              helperText={errors.max?.message}
             />
           </CardContent>
           <CardActions className={classes.actions}>
