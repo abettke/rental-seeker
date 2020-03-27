@@ -24,8 +24,8 @@ export const FilterBar: React.FC = () => {
 
   const classes = useStyles();
   return (
-    <AppBar position={'static'} color={'default'}>
-      <Toolbar color={'default'}>
+    <AppBar position={'static'} color={'default'} elevation={0}>
+      <Toolbar>
         <Grid container>
           <Button>Filter 1</Button>
           <Button>Filter 2</Button>

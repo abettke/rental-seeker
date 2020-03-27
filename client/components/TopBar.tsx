@@ -37,7 +37,7 @@ export const TopBar: React.FC = () => {
 
   const classes = useStyles();
   return (
-    <AppBar position={'static'}>
+    <AppBar position={'static'} color={'inherit'} elevation={0}>
       <Toolbar>
         <Icon className={classes.menuButton}>
           <HomeWorkIcon />
