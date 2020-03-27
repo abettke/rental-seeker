@@ -1,7 +1,8 @@
 import React from 'react';
+import { TopBar } from '../components/TopBar';
 
 export const Rentals: React.FC = () => {
   return (
-    <h2>Rentals Page</h2>
+    <TopBar />
   )
 };
