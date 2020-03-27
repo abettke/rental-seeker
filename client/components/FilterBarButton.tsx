@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -6,7 +7,8 @@ import Popover from '@material-ui/core/Popover';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import TextField from '@material-ui/core/TextField';
+
+import { NumberField } from './NumberField';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,12 +31,18 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+export interface RangeFilter {
+  min: number,
+  max: number,
+}
+
 export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props: React.PropsWithChildren<any>) => {
   const { children, ...buttonProps } = props;
+  const rangeFilterForm = useForm<RangeFilter>();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const [range, setRange] = useState({});
 
   const applyFilter = () => {
+    console.log(rangeFilterForm.getValues());
     // TODO: setRentals(filters)
   };
 
@@ -57,23 +65,15 @@ export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props:
       >
         <Card>
           <CardContent className={classes.rangeInputs}>
-            <TextField
+            <NumberField
               label={'Min'}
-              type={'number'}
-              onChange={
-                (ev: ChangeEvent<HTMLInputElement>) => {
-                  setRange({ ...range, min: parseInt(ev.currentTarget.value) });
-                }
-              }
+              name={'min'}
+              inputRef={rangeFilterForm.register}
             />
-            <TextField
+            <NumberField
               label={'Max'}
-              type={'number'}
-              onChange={
-                (ev: ChangeEvent<HTMLInputElement>) => {
-                  setRange({ ...range, max: parseInt(ev.currentTarget.value) });
-                }
-              }
+              name={'max'}
+              inputRef={rangeFilterForm.register}
             />
           </CardContent>
           <CardActions className={classes.actions}>
