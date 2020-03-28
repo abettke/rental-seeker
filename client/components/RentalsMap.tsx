@@ -1,6 +1,7 @@
 import React from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 import { useRentals } from '../hooks/useRentals';
 
 import Typography from '@material-ui/core/Typography';
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const RentalsMap: React.FC = () => {
+  const { role } = useCurrentUser();
   const { rentals } = useRentals();
   const center = [32.790882, -79.942017]; // Charleston, SC
   const zoom = 13;
@@ -52,17 +54,19 @@ export const RentalsMap: React.FC = () => {
               {rental.description}
             </Typography>
             <Typography variant={'subtitle1'}><strong>${rental.pricePerMonth}</strong> / month</Typography>
-            <div className={classes.availability}>
-              <Typography variant={'caption'}>
-                {rental.available ? 'Available' : 'Unavailable'}
-              </Typography>
-              <Icon>
-                {rental.available ?
-                  <Lens style={{ color: 'green' }} /> :
-                  <LensOutlined />
-                }
-              </Icon>
-            </div>
+            {role < 2 ?
+              <div className={classes.availability}>
+                <Typography variant={'caption'}>
+                  {rental.available ? 'Available' : 'Unavailable'}
+                </Typography>
+                <Icon>
+                  {rental.available ?
+                    <Lens style={{ color: 'green' }} /> :
+                    <LensOutlined />
+                  }
+                </Icon>
+              </div> : null
+            }
           </Popup>
         </Marker>
       )}

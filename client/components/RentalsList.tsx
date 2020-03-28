@@ -1,6 +1,7 @@
 import React from 'react';
 import { Rental } from '../../src/rental/rental.entity';
 import { useRentals } from '../hooks/useRentals';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -47,11 +48,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export const RentalsList: React.FC = () => {
+  const { role } = useCurrentUser();
   const { rentals } = useRentals();
   const media = { width: 1600, height: 900 };
   const mediaCategory = 'housing';
   const mediaUrl = `https://source.unsplash.com/${media.width}x${media.height}/?${mediaCategory}`;
-
+  console.log(role);
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -78,19 +80,21 @@ export const RentalsList: React.FC = () => {
             <Grid
               container
               alignItems={'center'}
-              justify={'space-between'}
+              justify={role < 2 ? 'space-between' : 'flex-end'}
             >
-              <Grid item className={classes.availability}>
-                <Typography variant={'caption'}>
-                  {rental.available ? 'Available' : 'Unavailable'}
-                </Typography>
-                <Icon>
-                  {rental.available ?
-                    <Lens style={{ color: 'green' }} /> :
-                    <LensOutlined />
-                  }
-                </Icon>
-              </Grid>
+              {role < 2 ?
+                <Grid item className={classes.availability}>
+                  <Typography variant={'caption'}>
+                    {rental.available ? 'Available' : 'Unavailable'}
+                  </Typography>
+                  <Icon>
+                    {rental.available ?
+                      <Lens style={{ color: 'green' }} /> :
+                      <LensOutlined />
+                    }
+                  </Icon>
+                </Grid> : null
+              }
               <Grid item>
                 <Typography variant={'h5'} className={classes.price}>${rental.pricePerMonth}</Typography>
                 <Typography variant={'caption'}>/ month</Typography>
