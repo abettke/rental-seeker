@@ -31,7 +31,7 @@ export const FilterBar: React.FC = () => {
 
   const classes = useStyles();
   return (
-    <AppBar position={'static'} color={'default'} elevation={0}>
+    <AppBar position={'static'} color={'inherit'} elevation={2}>
       <Toolbar>
         <Grid container spacing={4} className={classes.filters}>
           <RangeFilterButton>{'Rooms'}</RangeFilterButton>

@@ -4,16 +4,22 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-import { CardActions } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    margin: theme.spacing(1),
+  },
   card: {
     margin: theme.spacing(1),
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
   price: {
     marginRight: theme.spacing(.5),
@@ -26,13 +32,20 @@ export interface RentalsListProps {
 
 export const RentalsList: React.FC<RentalsListProps> = (props: RentalsListProps) => {
   const { rentals } = props;
-  console.log(rentals);
+  const media = { width: 1600, height: 900 };
+  const mediaCategory = 'housing';
+  const mediaUrl = `https://source.unsplash.com/${media.width}x${media.height}/?${mediaCategory}`;
 
   const classes = useStyles();
   return (
-    <>
-      {rentals?.map((rental: Rental) =>
-        <Card key={rental.id} elevation={0} className={classes.card}>
+    <div className={classes.root}>
+      {rentals?.map((rental: Rental) => (
+        <Card key={rental.id} className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            title={`${rental.name} Thumbnail`}
+            image={`${mediaUrl}&sig=${rental.id}`}
+          />
           <CardHeader
             title={rental.name}
             titleTypographyProps={{
@@ -56,7 +69,7 @@ export const RentalsList: React.FC<RentalsListProps> = (props: RentalsListProps)
             </Grid>
           </CardActions>
         </Card>
-      )}
-    </>
+      ))}
+    </div>
   )
 };
