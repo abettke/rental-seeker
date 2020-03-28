@@ -1,7 +1,5 @@
 import React from 'react';
-import { useGet } from 'restful-react';
-import { useAuth } from '../hooks/useAuth';
-import { api } from '../api';
+import { RentalsProvider } from '../context/RentalsContext';
 import { TopBar } from '../components/TopBar';
 import { FilterBar } from '../components/FilterBar';
 import { RentalsList } from '../components/RentalsList';
@@ -22,19 +20,9 @@ const useStyles = makeStyles({
 });
 
 export const Rentals: React.FC = () => {
-  const { auth } = useAuth();
-  const { data: res } = useGet({
-    ...api.rentals.list,
-    requestOptions: {
-      headers: {
-        'Authorization': `Bearer ${auth.accessToken}`,
-      },
-    },
-  });
-
   const classes = useStyles();
   return (
-    <>
+    <RentalsProvider>
       <header>
         <TopBar />
         <FilterBar />
@@ -45,12 +33,12 @@ export const Rentals: React.FC = () => {
         className={classes.root}
         >
         <Grid item xs={5} className={classes.listView}>
-          <RentalsList rentals={res?.data}/>
+          <RentalsList />
         </Grid>
         <Grid item xs>
-          <RentalsMap rentals={res?.data} />
+          <RentalsMap />
         </Grid>
       </Grid>
-    </>
+    </RentalsProvider>
   )
 };

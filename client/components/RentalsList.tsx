@@ -1,5 +1,6 @@
 import React from 'react';
 import { Rental } from '../../src/rental/rental.entity';
+import { useRentals } from '../hooks/useRentals';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -26,12 +27,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface RentalsListProps {
-  rentals: Rental[];
-}
-
-export const RentalsList: React.FC<RentalsListProps> = (props: RentalsListProps) => {
-  const { rentals } = props;
+export const RentalsList: React.FC = () => {
+  const { rentals } = useRentals();
   const media = { width: 1600, height: 900 };
   const mediaCategory = 'housing';
   const mediaUrl = `https://source.unsplash.com/${media.width}x${media.height}/?${mediaCategory}`;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRentals } from '../hooks/useRentals';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
@@ -41,8 +42,13 @@ export interface RangeFilter {
   max: number | undefined,
 }
 
-export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props: React.PropsWithChildren<any>) => {
-  const { children, ...buttonProps } = props;
+export interface RangeFilterButtonProps extends React.PropsWithChildren<any>{
+  filterKey?: string;
+}
+
+export const RangeFilterButton: React.FC<RangeFilterButtonProps> = (props: RangeFilterButtonProps) => {
+  const { filters, setFilters } = useRentals();
+  const { children, filterKey, ...buttonProps } = props;
   const { register, getValues, errors, clearError } = useForm<RangeFilter>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -58,8 +64,13 @@ export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props:
   };
 
   const applyFilter = () => {
-    console.log(getValues());
-    // TODO: setRentals(filters)
+    const { min, max }: RangeFilter = getNumberValues<RangeFilter>(getValues());
+    const filter = JSON.parse(JSON.stringify({ '$gte': min, '$lte': max }));
+    setFilters({
+      ...filters,
+      [filterKey ? filterKey : children.toLowerCase()]: filter,
+    });
+    setAnchorEl(null);
   };
 
   const classes = useStyles();
@@ -102,7 +113,7 @@ export const RangeFilterButton: React.FC<React.PropsWithChildren<any>> = (props:
           </CardContent>
           <CardActions className={classes.actions}>
             <Button size={'small'} onClick={() => setAnchorEl(null)}>Cancel</Button>
-            <Button size={'small'} onClick={applyFilter}>Apply</Button>
+            <Button size={'small'} onClick={applyFilter} disabled={!!Object.keys(errors).length}>Apply</Button>
           </CardActions>
         </Card>
       </Popover>

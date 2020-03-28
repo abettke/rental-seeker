@@ -36,7 +36,7 @@ export const FilterBar: React.FC = () => {
         <Grid container spacing={4} className={classes.filters}>
           <RangeFilterButton>{'Rooms'}</RangeFilterButton>
           <RangeFilterButton>{'Size'}</RangeFilterButton>
-          <RangeFilterButton>{'Price'}</RangeFilterButton>
+          <RangeFilterButton filterKey={'pricePerMonth'}>{'Price'}</RangeFilterButton>
         </Grid>
         <div className={classes.switch}>
           <Typography variant={'caption'}>Show Map</Typography>
