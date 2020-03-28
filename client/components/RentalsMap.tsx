@@ -3,6 +3,9 @@ import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import { makeStyles } from '@material-ui/core/styles';
 import { Rental } from '../../src/rental/rental.entity';
 
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+
 const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
@@ -28,7 +31,15 @@ export const RentalsMap: React.FC<RentalsMapProps> = (props: RentalsMapProps) =>
       {rentals && rentals.map(rental =>
         <Marker key={rental.id} position={rental.location.split(',')}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            <Typography variant={'h6'}>{rental.name}</Typography>
+            <Divider />
+            <Typography variant={'body2'}>
+              {`${rental.rooms} ${rental.rooms > 1 ? 'Bedrooms' : 'Bedroom'} ∙ ${rental.size} sq ft`}
+            </Typography>
+            <Typography variant={'body2'}>
+              {rental.description}
+            </Typography>
+            <Typography variant={'subtitle1'}><strong>${rental.pricePerMonth}</strong> / month</Typography>
           </Popup>
         </Marker>
       )}
