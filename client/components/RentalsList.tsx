@@ -64,7 +64,7 @@ export const RentalsList: React.FC<RentalsListProps> = (props: RentalsListProps)
               alignItems={'center'}
               justify={'flex-end'}
             >
-              <Typography variant={'h5'} className={classes.price}>{rental.pricePerMonth} </Typography>
+              <Typography variant={'h5'} className={classes.price}>${rental.pricePerMonth}</Typography>
               <Typography variant={'caption'}>/ month</Typography>
             </Grid>
           </CardActions>
