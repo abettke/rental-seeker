@@ -10,6 +10,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
+import Icon from '@material-ui/core/Icon';
+import Lens from '@material-ui/icons/Lens';
+import LensOutlined from '@material-ui/icons/LensOutlined'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -22,7 +25,23 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
+  actions: {
+    margin: theme.spacing(1),
+  },
+  availability: {
+    display: 'flex',
+    alignItems: 'center',
+    '& .MuiIcon-root': {
+      width: 'auto',
+      height: 'auto',
+      marginLeft: theme.spacing(.5),
+    },
+    '& .MuiSvgIcon-root': {
+      fontSize: '.75rem',
+    },
+  },
   price: {
+    display: 'inline',
     marginRight: theme.spacing(.5),
   },
 }));
@@ -55,14 +74,27 @@ export const RentalsList: React.FC = () => {
               {rental.description}
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions className={classes.actions}>
             <Grid
               container
               alignItems={'center'}
-              justify={'flex-end'}
+              justify={'space-between'}
             >
-              <Typography variant={'h5'} className={classes.price}>${rental.pricePerMonth}</Typography>
-              <Typography variant={'caption'}>/ month</Typography>
+              <Grid item className={classes.availability}>
+                <Typography variant={'caption'}>
+                  {rental.available ? 'Available' : 'Unavailable'}
+                </Typography>
+                <Icon>
+                  {rental.available ?
+                    <Lens style={{ color: 'green' }} /> :
+                    <LensOutlined />
+                  }
+                </Icon>
+              </Grid>
+              <Grid item>
+                <Typography variant={'h5'} className={classes.price}>${rental.pricePerMonth}</Typography>
+                <Typography variant={'caption'}>/ month</Typography>
+              </Grid>
             </Grid>
           </CardActions>
         </Card>

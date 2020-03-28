@@ -1,14 +1,30 @@
 import React from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { useRentals } from '../hooks/useRentals';
 
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
+import Lens from '@material-ui/icons/Lens';
+import LensOutlined from '@material-ui/icons/LensOutlined';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%',
+  },
+  availability: {
+    display: 'flex',
+    alignItems: 'center',
+    '& .MuiIcon-root': {
+      width: 'auto',
+      height: 'auto',
+      marginLeft: theme.spacing(.5),
+      fontSize: 'initial',
+    },
+    '& .MuiSvgIcon-root': {
+      fontSize: '.75rem',
+    },
   },
 }));
 
@@ -36,6 +52,17 @@ export const RentalsMap: React.FC = () => {
               {rental.description}
             </Typography>
             <Typography variant={'subtitle1'}><strong>${rental.pricePerMonth}</strong> / month</Typography>
+            <div className={classes.availability}>
+              <Typography variant={'caption'}>
+                {rental.available ? 'Available' : 'Unavailable'}
+              </Typography>
+              <Icon>
+                {rental.available ?
+                  <Lens style={{ color: 'green' }} /> :
+                  <LensOutlined />
+                }
+              </Icon>
+            </div>
           </Popup>
         </Marker>
       )}
