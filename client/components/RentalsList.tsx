@@ -22,9 +22,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   card: {
     margin: theme.spacing(1),
   },
-  media: {
+  cardFull: {
+    display: 'flex',
+  },
+  mediaFull: {
+    height: 400,
+    paddingLeft: '56.25%', // 16:9
+  },
+  mediaCompact: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   actions: {
     margin: theme.spacing(1),
@@ -47,60 +59,69 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const RentalsList: React.FC = () => {
+export interface RentalsListProps {
+  compact?: boolean;
+}
+
+export const RentalsList: React.FC<RentalsListProps> = (props: RentalsListProps) => {
   const { role } = useCurrentUser();
   const { rentals } = useRentals();
+  const { compact } = props;
   const media = { width: 1600, height: 900 };
   const mediaCategory = 'housing';
   const mediaUrl = `https://source.unsplash.com/${media.width}x${media.height}/?${mediaCategory}`;
-  console.log(role);
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       {rentals?.map((rental: Rental) => (
-        <Card key={rental.id} className={classes.card}>
+        <Card key={rental.id} className={`${classes.card} ${!compact ? classes.cardFull : ''}`.trim()}>
           <CardMedia
-            className={classes.media}
+            className={compact ? classes.mediaCompact : classes.mediaFull}
             title={`${rental.name} Thumbnail`}
             image={`${mediaUrl}&sig=${rental.id}`}
           />
-          <CardHeader
-            title={rental.name}
-            titleTypographyProps={{
-              variant: 'body1',
-            }}
-            subheader={`${rental.rooms} ${rental.rooms > 1 ? 'Bedrooms' : 'Bedroom'} ∙ ${rental.size} sq ft`}
-          />
-          <CardContent>
-            <Typography variant={'body2'}>
-              {rental.description}
-            </Typography>
-          </CardContent>
-          <CardActions className={classes.actions}>
-            <Grid
-              container
-              alignItems={'center'}
-              justify={role < 2 ? 'space-between' : 'flex-end'}
-            >
-              {role < 2 ?
-                <Grid item className={classes.availability}>
-                  <Typography variant={'caption'}>
-                    {rental.available ? 'Available' : 'Unavailable'}
-                  </Typography>
-                  <Icon>
-                    {rental.available ?
-                      <Lens style={{ color: 'green' }} /> :
-                      <LensOutlined />
-                    }
-                  </Icon>
-                </Grid> : null
-              }
-              <Grid item>
-                <Typography variant={'h5'} className={classes.price}>${rental.pricePerMonth}</Typography>
-                <Typography variant={'caption'}>/ month</Typography>
+          <div className={classes.content}>
+            <div>
+              <CardHeader
+                title={rental.name}
+                titleTypographyProps={{
+                  variant: 'body1',
+                }}
+                subheader={`${rental.rooms} ${rental.rooms > 1 ? 'Bedrooms' : 'Bedroom'} ∙ ${rental.size} sq ft`}
+              />
+              <CardContent>
+                <Typography variant={'body2'}>
+                  {rental.description}
+                </Typography>
+              </CardContent>
+            </div>
+            <CardActions className={classes.actions}>
+              <Grid
+                container
+                alignItems={'center'}
+                justify={role < 2 ? 'space-between' : 'flex-end'}
+              >
+                {role < 2 ?
+                  <Grid item className={classes.availability}>
+                    <Typography variant={'caption'}>
+                      {rental.available ? 'Available' : 'Unavailable'}
+                    </Typography>
+                    <Icon>
+                      {rental.available ?
+                        <Lens style={{ color: 'green' }} /> :
+                        <LensOutlined />
+                      }
+                    </Icon>
+                  </Grid> : null
+                }
+                <Grid item>
+                  <Typography variant={'h5'} className={classes.price}>${rental.pricePerMonth}</Typography>
+                  <Typography variant={'caption'}>/ month</Typography>
+                </Grid>
               </Grid>
-            </Grid>
-          </CardActions>
+            </CardActions>
+          </div>
         </Card>
       ))}
     </div>

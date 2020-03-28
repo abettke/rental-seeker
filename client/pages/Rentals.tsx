@@ -35,7 +35,7 @@ export const Rentals: React.FC = () => {
         className={classes.root}
         >
         <Grid item xs={isMapOpen ? 5 : 12} className={classes.listView}>
-          <RentalsList />
+          <RentalsList compact={isMapOpen} />
         </Grid>
         {isMapOpen &&
           <Grid item xs>
