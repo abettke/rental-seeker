@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     actions: {
       justifyContent: 'space-between',
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
     },
   }),
 );
@@ -89,6 +91,7 @@ export const RangeFilterButton: React.FC<RangeFilterButtonProps> = (props: Range
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        className={classes.popover}
       >
         <Card>
           <CardContent className={classes.rangeInputs}>
