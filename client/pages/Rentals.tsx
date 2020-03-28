@@ -48,7 +48,7 @@ export const Rentals: React.FC = () => {
           <RentalsList rentals={res?.data}/>
         </Grid>
         <Grid item xs>
-          <RentalsMap />
+          <RentalsMap rentals={res?.data} />
         </Grid>
       </Grid>
     </>
