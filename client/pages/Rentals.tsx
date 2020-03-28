@@ -5,6 +5,7 @@ import { api } from '../api';
 import { TopBar } from '../components/TopBar';
 import { FilterBar } from '../components/FilterBar';
 import { RentalsList } from '../components/RentalsList';
+import { RentalsMap } from '../components/RentalsMap';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -46,7 +47,9 @@ export const Rentals: React.FC = () => {
         <Grid item xs={5} className={classes.listView}>
           <RentalsList rentals={res?.data}/>
         </Grid>
-        <Grid item xs>Map View</Grid>
+        <Grid item xs>
+          <RentalsMap />
+        </Grid>
       </Grid>
     </>
   )
