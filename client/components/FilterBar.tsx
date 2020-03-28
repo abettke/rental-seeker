@@ -27,7 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const FilterBar: React.FC = () => {
+export interface FilterBarProps {
+  showMap: boolean,
+  setShowMap: (bool) => void,
+}
+
+export const FilterBar: React.FC<FilterBarProps> = (props: FilterBarProps) => {
 
   const classes = useStyles();
   return (
@@ -40,7 +45,7 @@ export const FilterBar: React.FC = () => {
         </Grid>
         <div className={classes.switch}>
           <Typography variant={'caption'}>Show Map</Typography>
-          <Switch />
+          <Switch checked={props.showMap} onChange={() => props.setShowMap(!props.showMap)}/>
         </div>
       </Toolbar>
     </AppBar>

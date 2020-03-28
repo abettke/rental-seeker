@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RentalsProvider } from '../context/RentalsContext';
 import { TopBar } from '../components/TopBar';
 import { FilterBar } from '../components/FilterBar';
@@ -20,24 +20,28 @@ const useStyles = makeStyles({
 });
 
 export const Rentals: React.FC = () => {
+  const [isMapOpen, setIsMapOpen] = useState(true);
+
   const classes = useStyles();
   return (
     <RentalsProvider>
       <header>
         <TopBar />
-        <FilterBar />
+        <FilterBar showMap={isMapOpen} setShowMap={setIsMapOpen} />
       </header>
       <Grid
         container
         component={'main'}
         className={classes.root}
         >
-        <Grid item xs={5} className={classes.listView}>
+        <Grid item xs={isMapOpen ? 5 : 12} className={classes.listView}>
           <RentalsList />
         </Grid>
-        <Grid item xs>
-          <RentalsMap />
-        </Grid>
+        {isMapOpen &&
+          <Grid item xs>
+            <RentalsMap />
+          </Grid>
+        }
       </Grid>
     </RentalsProvider>
   )
