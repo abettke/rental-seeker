@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useGet } from 'restful-react';
 import { useAuth } from '../hooks/useAuth';
 import { api } from '../api';
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 
 export const Rentals: React.FC = () => {
   const { auth } = useAuth();
-  const { data: res, loading, error } = useGet({
+  const { data: res } = useGet({
     ...api.rentals.list,
     requestOptions: {
       headers: {
