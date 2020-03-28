@@ -14,6 +14,11 @@ export const App: React.FC = () => {
     <AuthProvider>
       <RestfulProvider
         base={'/api'}
+        onError={err => {
+          if(err.status === 401 && location.pathname !== Routes.LOGIN){
+            location.replace(Routes.LOGIN)
+          }
+        }}
       >
       <Router>
         <Switch>
