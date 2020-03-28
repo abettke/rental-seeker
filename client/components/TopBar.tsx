@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { useAuth } from '../hooks/useAuth';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 import { Routes } from '../routes';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const TopBar: React.FC = () => {
   const history = useHistory();
+  const { username } = useCurrentUser();
   const { setAuth } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
@@ -46,6 +48,7 @@ export const TopBar: React.FC = () => {
           Rental Seeker
         </Typography>
         <div>
+          <Typography variant={'caption'}>{username}</Typography>
           <IconButton
             onClick={(event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)}
             color={'inherit'}
