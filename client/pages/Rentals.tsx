@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 import { RentalsProvider } from '../context/RentalsContext';
 import { TopBar } from '../components/TopBar';
 import { FilterBar } from '../components/FilterBar';
 import { RentalsList } from '../components/RentalsList';
 import { RentalsMap } from '../components/RentalsMap';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
+import Fab from '@material-ui/core/Fab';
+import Add from '@material-ui/icons/Add';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flexGrow: 1,
     overflow: 'hidden',
@@ -17,9 +20,16 @@ const useStyles = makeStyles({
     overflow: 'auto',
     height: '100%',
   },
-});
+  fab: {
+    position: 'absolute',
+    bottom: theme.spacing(3),
+    right: theme.spacing(2),
+    zIndex: 800,
+  },
+}));
 
 export const Rentals: React.FC = () => {
+  const { role } = useCurrentUser();
   const [isMapOpen, setIsMapOpen] = useState(true);
 
   const classes = useStyles();
@@ -43,6 +53,11 @@ export const Rentals: React.FC = () => {
           </Grid>
         }
       </Grid>
+      {role < 2 ?
+        <Fab className={classes.fab} color={'primary'}>
+          <Add />
+        </Fab> : null
+      }
     </RentalsProvider>
   )
 };
