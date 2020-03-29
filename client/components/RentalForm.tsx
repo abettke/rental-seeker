@@ -73,9 +73,9 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
     refetch: getRealtors,
     loading: fetchingRealtors,
     data: realtorRes,
-    cancel: getRealtorsCancel,
   } = useGet('users', {
     lazy: true,
+    debounce: true,
     queryParams: {
       s: JSON.stringify({
         role: 1,
@@ -137,10 +137,8 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
                 }}
                 onClose={() => {
                   setRealtorAC(false);
-                  getRealtorsCancel();
                 }}
                 onInputChange={() => {
-                  getRealtorsCancel();
                   getRealtors();
                 }}
                 onChange={(event: any, selected: User | null) => {

@@ -17,7 +17,7 @@
     "build:client": "copyfiles client/**/*.html client/**/*.css dist && webpack --config webpack.config.js",
     "build:client:dev": "copyfiles client/**/*.html client/**/*.css dist && webpack-dev-server --config webpack.config.js",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"client/**/*.ts\"",
-    "start": "nest start",
+    "start": "npm run build && nest start",
     "start:api:dev": "nest start --watch",
     "start:api:debug": "nest start --debug --watch",
     "start:api:prod": "node dist/main",
