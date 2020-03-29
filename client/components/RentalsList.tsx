@@ -1,8 +1,10 @@
 import React from 'react';
+import { useMutate, UseMutateProps } from 'restful-react';
 import { Rental } from '../../src/rental/rental.entity';
 import { useRentals } from '../hooks/useRentals';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import { api } from '../api';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -12,8 +14,11 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 import Lens from '@material-ui/icons/Lens';
 import LensOutlined from '@material-ui/icons/LensOutlined'
+import Delete from '@material-ui/icons/Delete'
+import { useAuth } from '../hooks/useAuth';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -49,6 +54,8 @@ const useStyles = makeStyles((theme: Theme) => ({
       height: 'auto',
       marginLeft: theme.spacing(.5),
     },
+  },
+  availabilityIcon: {
     '& .MuiSvgIcon-root': {
       fontSize: '.75rem',
     },
@@ -64,13 +71,23 @@ export interface RentalsListProps {
 }
 
 export const RentalsList: React.FC<RentalsListProps> = (props: RentalsListProps) => {
+  const { auth } = useAuth();
   const { role } = useCurrentUser();
-  const { rentals } = useRentals();
+  const { rentals, refetchRentals } = useRentals();
   const { compact } = props;
   const media = { width: 1600, height: 900 };
   const mediaCategory = 'housing';
   const mediaUrl = `https://source.unsplash.com/${media.width}x${media.height}/?${mediaCategory}`;
   const classes = useStyles();
+
+  const { mutate: deleteRentals } = useMutate({
+    ...(api.rentals.delete as UseMutateProps<any, any, any>),
+    requestOptions: {
+      headers: {
+        'Authorization': `Bearer ${auth.accessToken}`,
+      },
+    },
+  });
 
   return (
     <div className={classes.root}>
@@ -107,12 +124,17 @@ export const RentalsList: React.FC<RentalsListProps> = (props: RentalsListProps)
                     <Typography variant={'caption'}>
                       {rental.available ? 'Available' : 'Unavailable'}
                     </Typography>
-                    <Icon>
+                    <Icon className={classes.availabilityIcon}>
                       {rental.available ?
                         <Lens style={{ color: 'green' }} /> :
                         <LensOutlined />
                       }
                     </Icon>
+                    <IconButton onClick={() => {
+                      deleteRentals(rental.id).then(() => refetchRentals());
+                    }}>
+                      <Delete />
+                    </IconButton>
                   </Grid> : null
                 }
                 <Grid item>
