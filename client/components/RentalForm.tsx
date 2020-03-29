@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useGet, useMutate, UseMutateProps } from 'restful-react';
 import { useAuth } from '../hooks/useAuth';
 import { Rental } from '../../src/rental/rental.entity';
@@ -14,6 +14,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
@@ -21,8 +25,8 @@ import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme: Theme) => ({
   fields: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
   },
 }));
 
@@ -33,7 +37,11 @@ export interface RentalFormProps extends DialogProps{
 export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) => {
   const { auth } = useAuth();
   const { handleClose, ...dialogProps } = props;
-  const rentalForm = useForm<Rental>();
+  const rentalForm = useForm({
+    defaultValues: {
+      available: 1,
+    },
+  });
   const { mutate: saveRental, loading: saving } = useMutate(api.rentals.create as UseMutateProps<any, any, any>);
 
   const [realtorAC, setRealtorAC] = useState(false);
@@ -83,14 +91,6 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
                 fullWidth
                 required
               />
-              <TextField
-                label={'Description'}
-                name={'description'}
-                inputRef={rentalForm.register({ required: true })}
-                margin={'normal'}
-                fullWidth
-                required
-              />
               <Autocomplete
                 open={realtorAC}
                 onOpen={() => {
@@ -132,8 +132,23 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
                   />
                 )}
               />
+              <Controller
+                name={'available'}
+                control={rentalForm.control}
+                as={
+                  <FormControl margin={'normal'} fullWidth required>
+                    <InputLabel shrink={true}>Available</InputLabel>
+                    <Select
+                      defaultValue={1}
+                    >
+                      <MenuItem value={1}>Yes</MenuItem>
+                      <MenuItem value={0}>No</MenuItem>
+                    </Select>
+                  </FormControl>
+                }
+              />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} className={classes.fields}>
               <NumberField
                 label={'Rooms'}
                 name={'rooms'}
@@ -165,6 +180,19 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
                 required
               />
             </Grid>
+          </Grid>
+          <Grid container className={classes.fields}>
+            <TextField
+              label={'Description'}
+              name={'description'}
+              inputRef={rentalForm.register({ required: true })}
+              margin={'normal'}
+              multiline
+              rows={4}
+              rowsMax={4}
+              fullWidth
+              required
+            />
           </Grid>
         </DialogContent>
         <DialogActions>
