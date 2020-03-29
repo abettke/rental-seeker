@@ -12,13 +12,11 @@ $ npm install --silent
 
 ```bash
 # development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
+$ npm run start:api:debug
+$ npm run build:client:dev
 
 # production mode
-$ npm run start:prod
+$ npm run start
 ```
 
 ## Test
@@ -74,3 +72,7 @@ Write an application that manages apartment rentals
 |2020-03-23|   5   |
 |2020-03-23|   1.5 |
 |2020-03-26|   3   |
+|2020-03-26|   3   |
+|2020-03-27|   6   |
+|2020-03-28|   8   |
+|2020-03-28|   1   |
