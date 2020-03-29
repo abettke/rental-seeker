@@ -2,6 +2,7 @@ import React, { useState, createRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useGet, useMutate, UseMutateProps } from 'restful-react';
 import { useAuth } from '../hooks/useAuth';
+import { useRentals } from '../hooks/useRentals';
 import { User } from '../../src/user/user.entity';
 import { Form, FormSubmit } from './Form';
 import { NumberField } from './NumberField';
@@ -41,6 +42,7 @@ export interface RentalFormProps extends DialogProps{
 
 export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) => {
   const { auth } = useAuth();
+  const { refetchRentals } = useRentals();
   const { handleClose, ...dialogProps } = props;
 
   const markerRef = createRef();
@@ -76,6 +78,7 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
     lazy: true,
     queryParams: {
       s: JSON.stringify({
+        role: 1,
         username: {
           '$cont': rentalForm.getValues()['realtor'] || '',
         },
@@ -100,7 +103,10 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
       location,
       realtor: selectedRealtor,
     };
-    saveRental(rental).then(() => handleClose(false));
+    saveRental(rental).then(() => {
+      refetchRentals();
+      handleClose(false);
+    });
   };
 
   const classes = useStyles();

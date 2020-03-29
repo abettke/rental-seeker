@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const Rentals: React.FC = () => {
   const { role } = useCurrentUser();
   const [isMapOpen, setIsMapOpen] = useState(true);
-  const [isRentalFormOpen, setIsRentalFormOpen] = useState(true);
+  const [isRentalFormOpen, setIsRentalFormOpen] = useState(false);
 
   const classes = useStyles();
   return (

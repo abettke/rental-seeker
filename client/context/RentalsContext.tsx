@@ -9,6 +9,7 @@ export class RentalsContextInterface {
   rentals: Rental[];
   filters: Record<string, any>;
   setFilters: (filters: Record<string, any>) => void;
+  refetchRentals: () => Promise<void>;
 }
 
 export const RentalsContext = React.createContext<RentalsContextInterface>({
@@ -16,12 +17,13 @@ export const RentalsContext = React.createContext<RentalsContextInterface>({
   rentals: [],
   filters: {},
   setFilters: () => null,
+  refetchRentals: () => null,
 });
 
 export const RentalsProvider: React.FC = (props: React.ComponentProps<any>) => {
   const { auth } = useAuth();
   const [filters, setFilters] = React.useState<Record<string, any>>({});
-  const { loading, data: res } = useGet({
+  const { loading, data: res, refetch } = useGet({
     ...api.rentals.list,
     queryParams: {
       s: JSON.stringify(filters),
@@ -40,6 +42,7 @@ export const RentalsProvider: React.FC = (props: React.ComponentProps<any>) => {
         rentals: res ? res.data : [],
         filters,
         setFilters,
+        refetchRentals: refetch,
       }}
     >
       {props.children}
