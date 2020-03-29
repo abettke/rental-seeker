@@ -5,6 +5,7 @@ import { TopBar } from '../components/TopBar';
 import { FilterBar } from '../components/FilterBar';
 import { RentalsList } from '../components/RentalsList';
 import { RentalsMap } from '../components/RentalsMap';
+import { RentalForm } from '../components/RentalForm';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export const Rentals: React.FC = () => {
   const { role } = useCurrentUser();
   const [isMapOpen, setIsMapOpen] = useState(true);
+  const [isRentalFormOpen, setIsRentalFormOpen] = useState(true);
 
   const classes = useStyles();
   return (
@@ -53,8 +55,17 @@ export const Rentals: React.FC = () => {
           </Grid>
         }
       </Grid>
+      <RentalForm
+        open={isRentalFormOpen}
+        onClose={() => setIsRentalFormOpen(false)}
+        handleClose={setIsRentalFormOpen}
+      />
       {role < 2 ?
-        <Fab className={classes.fab} color={'primary'}>
+        <Fab
+          onClick={() => setIsRentalFormOpen(true)}
+          className={classes.fab}
+          color={'primary'}
+        >
           <Add />
         </Fab> : null
       }

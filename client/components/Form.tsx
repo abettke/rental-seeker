@@ -6,7 +6,7 @@ export interface FormProps {
   ctx: FormContextValues<any>;
   onSubmit?: (data: any) => any | Promise<any>;
   children: React.ReactNode;
-  className: string;
+  className?: string;
 }
 
 export const Form: React.FC<FormProps> = ({ ctx, onSubmit, children , ...formProps}: FormProps) => {
