@@ -2,14 +2,12 @@ import React, { useState, createRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useGet, useMutate, UseMutateProps } from 'restful-react';
 import { useAuth } from '../hooks/useAuth';
-import { Rental } from '../../src/rental/rental.entity';
 import { User } from '../../src/user/user.entity';
 import { Form, FormSubmit } from './Form';
 import { NumberField } from './NumberField';
 import { api } from '../api';
 import { makeStyles, Theme} from '@material-ui/core/styles';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-
+import { Map, TileLayer, Marker } from 'react-leaflet';
 
 import Dialog, { DialogProps } from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -54,11 +52,18 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
     reValidateMode: 'onBlur',
     defaultValues: {
       available: 1,
-      location: center,
+      location: center.join(','),
     },
   });
 
-  const { mutate: saveRental, loading: saving } = useMutate(api.rentals.create as UseMutateProps<any, any, any>);
+  const { mutate: saveRental, loading: saving } = useMutate({
+    ...(api.rentals.create as UseMutateProps<any, any, any>),
+    requestOptions: {
+      headers: {
+        Authorization: `Bearer ${auth.accessToken}`,
+      },
+    },
+  });
 
   const [realtorAC, setRealtorAC] = useState(false);
   const [selectedRealtor, setSelectedRealtor] = useState(null);
@@ -84,7 +89,18 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
   });
 
   const save = () => {
-    console.log(rentalForm.getValues(), selectedRealtor);
+    const { name, description, rooms, size, pricePerMonth, available, location } = rentalForm.getValues() as any;
+    const rental = {
+      name,
+      description,
+      rooms: parseInt(rooms),
+      size: parseInt(size),
+      pricePerMonth: parseInt(pricePerMonth),
+      available: Boolean(available),
+      location,
+      realtor: selectedRealtor,
+    };
+    saveRental(rental).then(() => handleClose(false));
   };
 
   const classes = useStyles();
@@ -215,6 +231,7 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
             />
           </Grid>
           <Map center={center} zoom={zoom} className={classes.leaflet}>
+            <input ref={rentalForm.register} name={'location'} hidden />
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -223,9 +240,9 @@ export const RentalForm: React.FC<RentalFormProps> = (props: RentalFormProps) =>
               draggable={true}
               onDragend={() => {
                 const { lat, lng } = (markerRef.current as any).leafletElement.getLatLng();
-                rentalForm.setValue('location', [lat, lng]);
+                rentalForm.setValue('location', [lat, lng].join(','));
               }}
-              position={rentalForm.getValues()['location'] || center}
+              position={(rentalForm.getValues().location as string).split(',')}
               ref={markerRef}
             >
             </Marker>
