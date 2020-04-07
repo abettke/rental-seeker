@@ -7,6 +7,7 @@ import { User } from '../user/user.entity';
 import { Rental } from './rental.entity';
 import { RentalService } from './rental.service';
 import { RentalRoutes } from './rental.routes';
+import { RequiredRoles } from '../auth/auth.decorator.roles';
 
 @Crud({
   model: {
@@ -32,6 +33,7 @@ import { RentalRoutes } from './rental.routes';
 })
 @Controller(RentalRoutes.ROOT)
 @UseGuards(JwtAuthGuard, RoleGuard)
+@RequiredRoles(Roles.ADMIN, Roles.REALTOR)
 export class RentalController implements CrudController<Rental> {
   constructor(public service: RentalService) {}
 }
