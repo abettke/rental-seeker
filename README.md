@@ -1,6 +1,6 @@
 ## Description
 
-Technical assessment project for toptal.
+A fun sample NestJs / React project where users can register and search available rentals in their area. Supports renters, realtors, and admin users. 
 
 ## Installation
 
@@ -40,39 +40,3 @@ On application start, example data is seeded into the database for use in testin
   * Ex. `username: realtor3, password: realtor3`
 * Clients: `username: client{n}, password: client{n}`
   * Ex. `username: client2, password: client2`
-
-## Acceptance Criteria
-
-Write an application that manages apartment rentals
-
-* Users must be able to create an account and log in.
-* Implement a client role:
-  * Clients are able to browse rentable apartments in a list and on a map.
-* Implement a realtor role:
-  * Realtors would be able to browse all rentable- and already rented apartments in a list and on a map.
-  * Realtors would be able to CRUD all apartments and set the apartment state to available/rented.
-* Implement an admin role:
-  * Admins would be able CRUD all apartments, realtors, and clients.
-* When an apartment is added, each new entry must have a name, description, floor area size, price per month, number of rooms, valid geolocation coordinates, date added and an associated realtor.
-* Geolocation coordinates should be added either by providing latitude/longitude directly or through address geocoding (https://developers.google.com/maps/documentation/javascript/geocoding).
-* All users should be able to filter the displayed apartments by size, price, and the number of rooms.
-* REST API. Make it possible to perform all user actions via the API, including authentication.
-* In both cases, you should be able to explain how a REST API works and demonstrate that by creating functional tests that use the REST Layer directly. Please be prepared to use REST clients like Postman, cURL, etc. for this purpose.
-* If it’s a web application, it must be a single-page application. All actions need to be done client-side using AJAX, refreshing the page is not acceptable.
-* Functional UI/UX design is needed. You are not required to create a unique design, however, do follow best practices to make the project as functional as possible.
-* Bonus: unit and e2e tests.
-
-## Time-tracking
-|   Date   | Hours |
-|   ---    | ---   |
-|2020-03-18|   2   |
-|2020-03-19|   2   |
-|2020-03-21|   4   |
-|2020-03-22|   4   |
-|2020-03-23|   5   |
-|2020-03-23|   1.5 |
-|2020-03-26|   3   |
-|2020-03-26|   3   |
-|2020-03-27|   6   |
-|2020-03-28|   8   |
-|2020-03-28|   1   |
