@@ -5,10 +5,14 @@ A fun sample NestJs / React project where users can register and search availabl
 ## Installation
 
 ```bash
-$ npm install --silent
+$ npm install
 ```
 
 ## Running the app
+
+By default, the application runs on port 8000
+
+```http://localhost:8000```
 
 ```bash
 # development
@@ -41,3 +45,4 @@ On application start, example data is seeded into the database for use in testin
 
 ## Todo
 * Add better global setup / teardown suites for e2e tests
+* Add UI component to show currently selected filters
