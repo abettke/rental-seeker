@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { getConnection, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { DatabaseModule } from '../src/database';
@@ -9,7 +9,7 @@ import { User } from '../src/user/user.entity';
 describe('Authentication API', () => {
   let app: INestApplication;
 
-  const username = 'testLoginUser';
+  const username = 'testLoginUser' + new Date().getTime();
   const password = 'testLoginUserPassword';
 
   beforeAll(async () => {
@@ -23,7 +23,6 @@ describe('Authentication API', () => {
     app = module.createNestApplication();
 
     await app.init();
-    await getConnection().synchronize(true);
     await getRepository(User).save(new User({ username, password }));
   });
 
@@ -33,7 +32,7 @@ describe('Authentication API', () => {
 
   it('POST /auth/register', async () => {
     const registration = '/auth/register';
-    const username = 'testuser';
+    const username = 'newlyregistered' + new Date().getTime();
     const password = 'averygoodstrongpasswordwow%$@';
 
     await request(app.getHttpServer())

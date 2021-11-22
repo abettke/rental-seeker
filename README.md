@@ -40,3 +40,7 @@ On application start, example data is seeded into the database for use in testin
   * Ex. `username: realtor3, password: realtor3`
 * Clients: `username: client{n}, password: client{n}`
   * Ex. `username: client2, password: client2`
+
+
+## Todo
+* Add better global setup / teardown suites for e2e tests
