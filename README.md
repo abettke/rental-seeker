@@ -37,7 +37,7 @@ $ npm run test:cov
 
 On application start, example data is seeded into the database for use in testing out the application.
 * Admin: `username: admin, password: admin`
-* Realtors: `username: realtor{n}, password: realtor${n}`
+* Realtors: `username: realtor{n}, password: realtor{n}`
   * Ex. `username: realtor3, password: realtor3`
 * Clients: `username: client{n}, password: client{n}`
   * Ex. `username: client2, password: client2`
