@@ -1,12 +1,12 @@
 {
-  "name": "andrew-bettke",
+  "name": "rental-seeker",
   "version": "1.0.0",
   "engines": {
     "node": ">=10.0.0",
     "npm": ">=6.0.0"
   },
   "engineStrict": true,
-  "description": "Technical assessment project for toptal.",
+  "description": "Example technical assessment project.",
   "author": "abettke@gmail.com",
   "private": true,
   "license": "UNLICENSED",
@@ -107,13 +107,9 @@
     "webpack-dev-server": "^3.10.3"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".spec.ts$",
+    "moduleFileExtensions": ["js", "json", "ts"],
+    "rootDir": ".",
+    "testRegex": ".test.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
