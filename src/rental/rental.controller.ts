@@ -33,7 +33,7 @@ import { RequiredRoles } from '../auth/auth.decorator.roles';
 })
 @Controller(RentalRoutes.ROOT)
 @UseGuards(JwtAuthGuard, RoleGuard)
-@RequiredRoles(Roles.ADMIN, Roles.REALTOR)
+@RequiredRoles(Roles.ADMIN, Roles.REALTOR, Roles.CLIENT)
 export class RentalController implements CrudController<Rental> {
   constructor(public service: RentalService) {}
 }
