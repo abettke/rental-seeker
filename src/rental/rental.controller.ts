@@ -1,5 +1,5 @@
 import { Controller, UseGuards } from '@nestjs/common';
-import { Crud, CrudAuth, CrudController } from '@nestjsx/crud';
+import { Crud, CrudAuth, CrudController, CrudRequest, Override, ParsedRequest, ParsedBody } from '@nestjsx/crud';
 import { JwtAuthGuard } from '../auth/auth.guard.jwt';
 import { RoleGuard } from '../auth/auth.guard.role';
 import { Roles } from '../auth/auth.roles';
@@ -33,7 +33,36 @@ import { RequiredRoles } from '../auth/auth.decorator.roles';
 })
 @Controller(RentalRoutes.ROOT)
 @UseGuards(JwtAuthGuard, RoleGuard)
-@RequiredRoles(Roles.ADMIN, Roles.REALTOR, Roles.CLIENT)
 export class RentalController implements CrudController<Rental> {
   constructor(public service: RentalService) {}
+
+  get base(): CrudController<Rental> {
+    return this;
+  }
+
+  @Override()
+  @RequiredRoles(Roles.ADMIN, Roles.REALTOR)
+  createOne(
+    @ParsedRequest() req: CrudRequest,
+    @ParsedBody() dto: Rental
+  ): Promise<Rental> {
+    return this.base.createOneBase(req, dto);
+  }
+
+  @Override()
+  @RequiredRoles(Roles.ADMIN, Roles.REALTOR)
+  updateOne(
+    @ParsedRequest() req: CrudRequest,
+    @ParsedBody() dto: Rental
+  ): Promise<Rental> {
+    return this.base.updateOneBase(req, dto);
+  }
+
+  @Override()
+  @RequiredRoles(Roles.ADMIN, Roles.REALTOR)
+  deleteOne(
+    @ParsedRequest() req: CrudRequest,
+  ) {
+    return this.base.deleteOneBase(req);
+  }
 }
