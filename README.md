@@ -22,13 +22,10 @@ $ npm run start
 ## Test
 
 ```bash
-# unit tests
+# tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
+# test with coverage
 $ npm run test:cov
 ```
 
